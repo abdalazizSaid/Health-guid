@@ -197,7 +197,6 @@ const AdminDashboard = () => {
             </Card>
           </Col>
 
-          {/* كارد لستة الدكاترة */}
           <Col lg={8}>
             <Card className="patient-card">
               <CardBody>
