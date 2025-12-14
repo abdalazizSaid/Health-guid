@@ -227,7 +227,7 @@ const RegisterDetails = () => {
                     <FormGroup>
                       <Label className="small mb-1">Height cm</Label>
                       <input
-                        type="number"
+                        type="text"
                         id="heightCm"
                         className="form-control"
                         {...register("heightCm", {
@@ -243,7 +243,7 @@ const RegisterDetails = () => {
                     <FormGroup>
                       <Label className="small mb-1">Weight kg</Label>
                       <input
-                        type="number"
+                        type="text"
                         id="weightKg"
                         className="form-control"
                         {...register("weightKg", {

@@ -3,7 +3,6 @@ import cors from "cors";
 import express from "express";
 
 import UserModel from "./Models/UserModel.js";
-import PostModel from "./Models/Posts.js";
 import AppointmentModel from "./Models/AppointmentModel.js";
 
 import bcrypt from "bcrypt";
@@ -32,12 +31,22 @@ mongoose
 
 /* ================= AI Symptom Assistant ================= */
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+let openaiClient = null;
+if (process.env.OPENAI_API_KEY) {
+  openaiClient = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 app.post("/ai/symptoms", async (req, res) => {
   try {
+    if (!openaiClient) {
+      return res.status(503).json({
+        error:
+          "AI assistant is currently disabled. OPENAI_API_KEY is not configured on the server.",
+      });
+    }
+
     const { symptoms, previousMessages } = req.body;
 
     if (!symptoms || !symptoms.trim()) {
@@ -70,7 +79,7 @@ app.post("/ai/symptoms", async (req, res) => {
       content: symptoms,
     });
 
-    const completion = await openai.chat.completions.create({
+    const completion = await openaiClient.chat.completions.create({
       model: "gpt-4o-mini",
       messages,
       temperature: 0.3,
@@ -287,74 +296,6 @@ app.get("/doctors", async (req, res) => {
   } catch (error) {
     console.error("get doctors error:", error);
     return res.status(500).json({ error: "An error occurred" });
-  }
-});
-
-/* ---------------------- POSTS APIS ---------------------- */
-
-app.post("/savePost", async (req, res) => {
-  try {
-    const postMsg = req.body.postMsg;
-    const email = req.body.email;
-
-    const post = new PostModel({
-      postMsg,
-      email,
-    });
-
-    await post.save();
-    res.send({ post, msg: "Added." });
-  } catch (error) {
-    res.status(500).json({ error: "An error occurred" });
-  }
-});
-
-app.get("/getPosts", async (req, res) => {
-  try {
-    const posts = await PostModel.find({}).sort({ createdAt: -1 });
-    const countPost = await PostModel.countDocuments({});
-    res.send({ posts, count: countPost });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "An error occurred" });
-  }
-});
-
-app.put("/likePost/:postId/", async (req, res) => {
-  const postId = req.params.postId;
-  const userId = req.body.userId;
-  try {
-    const postToUpdate = await PostModel.findOne({ _id: postId });
-    if (!postToUpdate) {
-      return res.status(404).json({ msg: "Post not found." });
-    }
-
-    const userIndex = postToUpdate.likes.users.indexOf(userId);
-
-    if (userIndex !== -1) {
-      const udpatedPost = await PostModel.findOneAndUpdate(
-        { _id: postId },
-        {
-          $inc: { "likes.count": -1 },
-          $pull: { "likes.users": userId },
-        },
-        { new: true }
-      );
-      res.json({ post: udpatedPost, msg: "Post unliked." });
-    } else {
-      const updatedPost = await PostModel.findOneAndUpdate(
-        { _id: postId },
-        {
-          $inc: { "likes.count": 1 },
-          $addToSet: { "likes.users": userId },
-        },
-        { new: true }
-      );
-      res.json({ post: updatedPost, msg: "Post liked." });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "An error occurred" });
   }
 });
 
