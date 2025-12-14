@@ -23,6 +23,7 @@ services:
       DB_USER: 66j1948_db_user
       DB_PASSWORD: 66j1948
       DB_NAME: Health_guide
+      DB_CLUSTER: healthguidecluster.xlsvsxh.mongodb.net
 networks:
   app-network:
     driver: bridge
