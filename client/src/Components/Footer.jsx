@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div>
-        © 2025 Health Guide | Powered by AI | Your Health, Our Priority <br />
+        © 2025 Health Guide | Your Health, Our Priority <br />
         By | Abdalaziz | Hamed | Asama
       </div>
     </footer>
