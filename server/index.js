@@ -31,22 +31,12 @@ mongoose
 
 /* ================= AI Symptom Assistant ================= */
 
-let openaiClient = null;
-if (process.env.OPENAI_API_KEY) {
-  openaiClient = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-}
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 app.post("/ai/symptoms", async (req, res) => {
   try {
-    if (!openaiClient) {
-      return res.status(503).json({
-        error:
-          "AI assistant is currently disabled. OPENAI_API_KEY is not configured on the server.",
-      });
-    }
-
     const { symptoms, previousMessages } = req.body;
 
     if (!symptoms || !symptoms.trim()) {
@@ -79,7 +69,7 @@ app.post("/ai/symptoms", async (req, res) => {
       content: symptoms,
     });
 
-    const completion = await openaiClient.chat.completions.create({
+    const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages,
       temperature: 0.3,
