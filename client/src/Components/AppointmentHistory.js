@@ -1,4 +1,3 @@
-// src/pages/AppointmentHistory.js
 import { useEffect, useMemo } from "react";
 import {
   Container,
@@ -13,7 +12,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { getAppointmentsByUser } from "../Features/AppointmentSlice";
 
-// لون البادج حسب حالة الموعد
 const getStatusColor = (status) => {
   if (!status) return "secondary";
   switch (status.toLowerCase()) {

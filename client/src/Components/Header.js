@@ -1,4 +1,3 @@
-// src/components/Header.js
 import { Navbar, NavbarBrand, Nav, NavItem, Button } from "reactstrap";
 import { Link, NavLink as RouterNavLink } from "react-router-dom";
 
@@ -69,7 +68,6 @@ const Header = () => {
         </RouterNavLink>
       </NavItem>
 
-      {/* رجعنا Appointment History للمريض */}
       <NavItem>
         <RouterNavLink to="/appointments" className={baseLinkClass}>
           Appointments
@@ -96,9 +94,8 @@ const Header = () => {
 
   const renderDoctorNav = () => (
     <>
-      {/* الدكتور يشوف بس المواعيد وبروفايله كما طلبت */}
       <NavItem>
-        <RouterNavLink to="/doctor/appointments" className={baseLinkClass}>
+        <RouterNavLink to="/doctor/appoin" className={baseLinkClass}>
           Appointments
         </RouterNavLink>
       </NavItem>
@@ -125,7 +122,6 @@ const Header = () => {
 
   const renderAdminNav = () => (
     <>
-      {/* للادمن بس الاسم واللوق اوت */}
       <span className="me-3 header-user-name">
         {user?.name || "System Admin"}
       </span>
@@ -145,7 +141,6 @@ const Header = () => {
     if (user.role === "admin") return renderAdminNav();
     if (user.role === "doctor") return renderDoctorNav();
 
-    // الافتراضي مريض
     return renderPatientNav();
   };
 

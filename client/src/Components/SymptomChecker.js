@@ -1,4 +1,3 @@
-// src/pages/SymptomChecker.js
 import { useState } from "react";
 import {
   Container,
@@ -19,14 +18,13 @@ const SymptomChecker = () => {
   const [symptoms, setSymptoms] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [messages, setMessages] = useState([]); // محادثة بسيطة بين المريض والـ AI
+  const [messages, setMessages] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const trimmed = symptoms.trim();
     if (!trimmed) return;
 
-    // نضيف رسالة المريض في الواجهة
     const newMessages = [...messages, { role: "user", content: trimmed }];
     setMessages(newMessages);
     setLoading(true);
@@ -60,7 +58,6 @@ const SymptomChecker = () => {
   return (
     <div className="symptom-page">
       <Container>
-        {/* العنوان نفس التصميم */}
         <Row className="mb-4">
           <Col md={8}>
             <h2 className="patient-title">Describe your symptoms</h2>
@@ -76,7 +73,6 @@ const SymptomChecker = () => {
           </Col>
         </Row>
 
-        {/* كارد الإدخال */}
         <Row className="justify-content-center mb-4">
           <Col md={8} lg={7}>
             <Card className="symptom-card">
@@ -110,8 +106,6 @@ const SymptomChecker = () => {
             </Card>
           </Col>
         </Row>
-
-        {/* جزء المحادثة مع الـ AI */}
         {messages.length > 0 && (
           <Row className="justify-content-center">
             <Col md={8} lg={7}>

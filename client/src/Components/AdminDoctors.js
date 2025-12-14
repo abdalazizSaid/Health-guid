@@ -1,4 +1,3 @@
-// src/pages/AdminDoctors.js
 import { useEffect, useState } from "react";
 import {
   Container,
@@ -23,7 +22,6 @@ const AdminDoctors = () => {
   const user = useSelector((state) => state.users.user);
   const navigate = useNavigate();
 
-  // state منفصل لكل حقل (مثل ما طلبت)
   const [docName, setDocName] = useState("");
   const [docEmail, setDocEmail] = useState("");
   const [docPassword, setDocPassword] = useState("");
@@ -35,7 +33,6 @@ const AdminDoctors = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // لو مو أدمن رجعه لصفحة لوق إن الأدمن
   useEffect(() => {
     if (!user || user.role !== "admin") {
       navigate("/admin/login");
@@ -115,7 +112,6 @@ const AdminDoctors = () => {
         </Row>
 
         <Row className="gy-4">
-          {/* فورم إضافة دكتور */}
           <Col lg={5}>
             <Card className="patient-card">
               <CardBody>
@@ -191,7 +187,6 @@ const AdminDoctors = () => {
             </Card>
           </Col>
 
-          {/* قائمة الدكاترة */}
           <Col lg={7}>
             <Card className="patient-card">
               <CardBody>

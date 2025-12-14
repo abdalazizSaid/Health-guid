@@ -1,4 +1,3 @@
-// src/pages/DoctorAppointments.js
 import { useEffect, useState, useCallback } from "react";
 import {
   Container,
@@ -24,9 +23,8 @@ const DoctorAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [noteDrafts, setNoteDrafts] = useState({}); // { appointmentId: "note text" }
+  const [noteDrafts, setNoteDrafts] = useState({});
 
-  // حماية الصفحة
   useEffect(() => {
     if (!user || user.role !== "doctor") {
       navigate("/login");
@@ -42,14 +40,13 @@ const DoctorAppointments = () => {
     try {
       const res = await axios.get(`${ENV.SERVER_URL}/appointments`, {
         params: {
-          doctorId: user._id, // للمواعيد الجديدة
-          doctorName: user.name, // للمواعيد القديمة اللي ما فيها doctorId
+          doctorId: user._id,
+          doctorName: user.name,
         },
       });
 
       const data = Array.isArray(res.data) ? res.data : [];
 
-      // ترتيب حسب التاريخ والوقت
       data.sort((a, b) => {
         const d1 = new Date(a.preferredDate);
         const d2 = new Date(b.preferredDate);
@@ -61,7 +58,6 @@ const DoctorAppointments = () => {
 
       setAppointments(data);
 
-      // نجهز النوت لكل موعد
       const drafts = {};
       data.forEach((appt) => {
         drafts[appt._id] = appt.doctorNote || "";
@@ -207,7 +203,6 @@ const DoctorAppointments = () => {
                     </div>
 
                     <div className="d-flex gap-2 flex-wrap">
-                      {/* الأزرار حسب الحالة */}
                       {appt.status !== "accepted" && (
                         <Button
                           size="sm"

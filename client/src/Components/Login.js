@@ -1,4 +1,3 @@
-// src/Components/Login.js
 import React, { useState } from "react";
 import {
   Container,
@@ -16,13 +15,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../Features/UserSlice";
 
-// غيّر اسم الصورة / المسار حسب اللي عندك في المشروع
 import clinicImg from "../Images/login.jpg";
 import logo from "../Images/images_3.jpg";
 
 const Login = () => {
-  // هذا فقط لتغيير شكل الزر (Patient / Doctor / Admin) من الناحية البصرية
-  const [roleTab, setRoleTab] = useState("patient"); // patient | doctor | admin
+  const [roleTab, setRoleTab] = useState("patient");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,7 +37,6 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // نرسل الإيميل والباسورد للباك إند عن طريق ثنك login
       const resultAction = await dispatch(login({ email, password }));
 
       if (resultAction.error) {
@@ -56,16 +52,14 @@ const Login = () => {
         return;
       }
 
-      // نتأكد في الداتا بيس أن فيه role مضبوط
       const userRole = user.role || "patient";
 
-      // توجيه حسب نوع الحساب من الداتا بيس
       if (userRole === "admin") {
-        navigate("/admin/dashboard"); // صفحة لوحة تحكم الأدمن
+        navigate("/admin/dashboard");
       } else if (userRole === "doctor") {
-        navigate("/doctor/appoin"); // صفحة مواعيد الدكتور
+        navigate("/doctor/appoin");
       } else {
-        navigate("/patient/profile"); // المريض يروح للبروفايل
+        navigate("/patient/profile");
       }
     } catch (err) {
       console.error(err);
@@ -85,7 +79,6 @@ const Login = () => {
           <Col lg="10">
             <Card className="auth-card shadow-sm border-0">
               <Row className="g-0">
-                {/* العمود الأيسر – صورة العيادة مع كرت الديمو */}
                 <Col
                   md="6"
                   className="login-left d-none d-md-block position-relative"
@@ -132,7 +125,6 @@ const Login = () => {
                   </div>
                 </Col>
 
-                {/* العمود الأيمن – فورم اللوق إن مع اختيار الدور (للشكل فقط) */}
                 <Col md="6" className="d-flex align-items-center login-right">
                   <CardBody className="w-100 px-4 py-4">
                     <h3 className="auth-title mb-1">Welcome Back</h3>
@@ -140,7 +132,6 @@ const Login = () => {
                       Please enter your credentials to sign in
                     </p>
 
-                    {/* اختيار الدور – يؤثر على الشكل فقط */}
                     <Label className="small fw-semibold mb-2">Sign in as</Label>
                     <div className="d-flex gap-2 flex-wrap mb-3">
                       <button

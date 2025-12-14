@@ -11,7 +11,7 @@ import * as ENV from "./config.js";
 import OpenAI from "openai";
 import dotenv from "dotenv";
 
-dotenv.config(); // تفعيل env في البداية
+dotenv.config();
 
 const app = express();
 
@@ -108,7 +108,7 @@ app.post("/checkEmail", async (req, res) => {
   }
 });
 
-// registration يحفظ كل بيانات المريض او الدكتور او الادمن
+// registration
 app.post("/registerUser", async (req, res) => {
   try {
     const {
@@ -197,7 +197,7 @@ app.post("/logout", async (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-// update profile بدون تغيير الاسم والايميل
+// update profile
 app.put("/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -216,7 +216,7 @@ app.put("/users/:id", async (req, res) => {
       "emergencyContactName",
       "emergencyContactPhone",
       "emergencyRelationship",
-      "specialty", // <<< مهم للدكتور
+      "specialty",
     ];
 
     const updateFields = {};
@@ -241,9 +241,8 @@ app.put("/users/:id", async (req, res) => {
   }
 });
 
-/* ---------------------- DOCTORS APIS (عام) ---------------------- */
+/* ---------------------- DOCTORS APIS  ---------------------- */
 
-// إنشاء دكتور (لو احتجته من مكان عام، غير الأدمن)
 app.post("/doctors", async (req, res) => {
   try {
     const { name, email, password, specialty, phoneNumber } = req.body;
@@ -278,7 +277,7 @@ app.post("/doctors", async (req, res) => {
   }
 });
 
-// جلب قائمة الدكاترة للحجز وغيره
+// get Doctors
 app.get("/doctors", async (req, res) => {
   try {
     const doctors = await UserModel.find({ role: "doctor" }).select(
@@ -372,8 +371,8 @@ app.post("/appointments", async (req, res) => {
       patientGender,
       patientDateOfBirth,
       specialty,
-      doctor, // اسم الدكتور
-      doctorId, // اختياري الان
+      doctor,
+      doctorId,
       preferredDate,
       preferredTime,
       reason,
@@ -418,7 +417,7 @@ app.post("/appointments", async (req, res) => {
   }
 });
 
-// get appointments لمريض او دكتور
+// get appointments
 app.get("/appointments", async (req, res) => {
   try {
     const { userId, doctorId } = req.query;
@@ -477,7 +476,7 @@ app.put("/appointments/:id/status", async (req, res) => {
 
 /* ---------------------- ADMIN DOCTORS APIS ---------------------- */
 
-// list all doctors للادمن مع ترتيب
+// list all doctors
 app.get("/admin/doctors", async (req, res) => {
   try {
     const doctors = await UserModel.find({ role: "doctor" }).sort({

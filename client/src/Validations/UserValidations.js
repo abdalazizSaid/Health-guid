@@ -1,18 +1,5 @@
 import * as yup from "yup";
 
-export const userSchemaValidation = yup.object().shape({
-  name: yup.string().required("Name is required"),
-  email: yup
-    .string()
-    .email("Not valid email format")
-    .required("Email is required"),
-  password: yup.string().min(4).max(20).required("Password is required"),
-  confirmpassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords Don't Match")
-    .required(),
-});
-
 export const registerStep1Schema = yup.object().shape({
   fullName: yup.string().required("Full Name is required"),
   phoneNumber: yup.string().required("Phone number is required"),
@@ -34,13 +21,34 @@ export const registerStep2Schema = yup.object().shape({
   gender: yup.string().required("Gender is required"),
   bloodType: yup.string().required("Blood type is required"),
 
-  heightCm: yup.number().nullable(),
-  weightKg: yup.number().nullable(),
+  heightCm: yup
+    .string()
+    .matches(/^\d+\.\d+$/, "Value must have a decimal value")
+    .required("Height is required...")
+    .test("is-decimal", "Value must have a decimal value", (value) => {
+      if (!value) return false;
+      return /^\d+\.\d+$/.test(value); // Ensures it contains a decimal part
+    }),
+  weightKg: yup
+    .string()
+    .matches(/^\d+\.\d+$/, "Value must have a decimal value")
+    .required("Weight is required...")
+    .test("is-decimal", "Value must have a decimal value", (value) => {
+      if (!value) return false;
+      return /^\d+\.\d+$/.test(value); // Ensures it contains a decimal part
+    }),
 
   streetAddress: yup.string().nullable(),
   city: yup.string().nullable(),
   stateValue: yup.string().nullable(),
-  zipCode: yup.string().nullable(),
+  zipCode: yup
+    .string()
+    .matches(/^\d+$/, "Value must be a whole number...") // Ensures only whole numbers
+    .test("is-integer", "Value must be an integer...", (value) => {
+      if (!value) return false; // Ensure it's not empty
+      return Number.isInteger(Number(value)); // Ensures it's a valid integer
+    })
+    .nullable(),
 
   emergencyContactName: yup.string().nullable(),
   emergencyContactPhone: yup.string().nullable(),

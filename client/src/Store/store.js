@@ -1,7 +1,6 @@
 // src/app/store.js أو src/store/store.js حسب مشروعك
 import { configureStore } from "@reduxjs/toolkit";
 import usersReducer from "../Features/UserSlice";
-import postReducer from "../Features/PostSlice";
 import appointmentReducer from "../Features/AppointmentSlice";
 
 import { persistStore, persistReducer } from "redux-persist";
@@ -15,8 +14,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   users: usersReducer,
-  posts: postReducer,
-  appointments: appointmentReducer, // اضفها هنا
+  appointments: appointmentReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

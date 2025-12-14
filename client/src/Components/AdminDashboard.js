@@ -1,4 +1,3 @@
-// src/pages/AdminDashboard.js
 import { useEffect, useState } from "react";
 import {
   Container,
@@ -37,7 +36,6 @@ const AdminDashboard = () => {
     specialty: "",
   });
 
-  // فقط الادمن يقدر يدخل
   useEffect(() => {
     if (!user || user.role !== "admin") {
       navigate("/login");

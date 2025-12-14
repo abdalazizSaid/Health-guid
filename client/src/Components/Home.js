@@ -10,7 +10,6 @@ const Home = () => {
   const [showAppointment, setShowAppointment] = useState(false);
   const navigate = useNavigate();
 
-  // نجيب المستخدم من الريدوكس عشان نعرف إذا مسجل دخول أو لا
   const user = useSelector((state) => state.users.user);
 
   const openAppointment = () => setShowAppointment(true);
@@ -18,10 +17,9 @@ const Home = () => {
 
   const goToSymptomChecker = () => navigate("/symptom-checker");
 
-  // يرسل لصفحة التسجيل فقط إذا ما في مستخدم مسجل
   const goToRegister = () => {
     if (user && user.email) {
-      return; // مسجل دخول، لا تفعل شيء
+      return;
     }
     navigate("/register");
   };

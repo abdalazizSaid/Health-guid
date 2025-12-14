@@ -1,10 +1,9 @@
-// src/Features/AppointmentSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as ENV from "../config";
 
 const initialState = {
-  appointments: [], // نستخدمها للـ patient او doctor حسب الصفحة
+  appointments: [],
   isLoading: false,
   isError: false,
   errorMessage: "",
@@ -12,7 +11,7 @@ const initialState = {
 
 /* ================= Thunks ================= */
 
-// حجز موعد جديد
+// new appoint
 export const createAppointment = createAsyncThunk(
   "appointments/createAppointment",
   async (appointmentData, { rejectWithValue }) => {
@@ -21,7 +20,7 @@ export const createAppointment = createAsyncThunk(
         `${ENV.SERVER_URL}/appointments`,
         appointmentData
       );
-      // نتوقع ارجاع { appointment: {...} }
+
       return response.data.appointment || response.data;
     } catch (err) {
       return rejectWithValue(
@@ -31,7 +30,7 @@ export const createAppointment = createAsyncThunk(
   }
 );
 
-// جلب مواعيد مريض معيّن
+// get patient appoint
 export const getAppointmentsByUser = createAsyncThunk(
   "appointments/getAppointmentsByUser",
   async (userId, { rejectWithValue }) => {
@@ -48,7 +47,7 @@ export const getAppointmentsByUser = createAsyncThunk(
   }
 );
 
-// جلب مواعيد دكتور معيّن
+// get doctor appoint
 export const getAppointmentsByDoctor = createAsyncThunk(
   "appointments/getAppointmentsByDoctor",
   async (doctorId, { rejectWithValue }) => {
@@ -65,7 +64,7 @@ export const getAppointmentsByDoctor = createAsyncThunk(
   }
 );
 
-// تحديث حالة الموعد مع ملاحظة الدكتور
+// update appoint
 export const updateAppointmentStatus = createAsyncThunk(
   "appointments/updateAppointmentStatus",
   async ({ id, status, doctorNote }, { rejectWithValue }) => {
@@ -75,7 +74,6 @@ export const updateAppointmentStatus = createAsyncThunk(
         { status, doctorNote }
       );
 
-      // نتوقع { appointment: {...} }
       return response.data.appointment || response.data;
     } catch (err) {
       return rejectWithValue(

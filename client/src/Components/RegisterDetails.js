@@ -1,4 +1,3 @@
-// src/pages/RegisterDetails.js
 import {
   Button,
   Col,
@@ -30,7 +29,6 @@ const RegisterDetails = () => {
     }
   }, [step1Data, navigate]);
 
-  // useState لكل حقل مثل الكود القديم
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [gender, setGender] = useState("");
   const [bloodType, setBloodType] = useState("");
@@ -122,7 +120,6 @@ const RegisterDetails = () => {
                 <p className="text-danger small mb-2">{serverError}</p>
               )}
 
-              {/* بيانات الخطوة الاولى للعرض فقط */}
               <div className="mb-4">
                 <h6 className="small text-uppercase text-muted mb-2">
                   Account overview

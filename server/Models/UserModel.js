@@ -1,4 +1,3 @@
-// server/Models/UserModel.js
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
@@ -18,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
 
-  // patient أو doctor أو admin
+  // patient / doctor / admin
   role: {
     type: String,
     default: "patient",
@@ -28,12 +27,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
 
-  // تخصص الدكتور عشان يطلع في الحجز
   specialty: {
     type: String,
   },
 
-  // بيانات المريض
   dateOfBirth: {
     type: Date,
   },

@@ -1,4 +1,3 @@
-// src/Components/AppointmentModal.js
 import {
   Modal,
   ModalHeader,
@@ -19,12 +18,9 @@ import * as ENV from "../config";
 const AppointmentModal = ({ isOpen, toggle, onBooked }) => {
   const user = useSelector((state) => state.users.user);
 
-  // قائمة الدكاترة من الداتا بيس
   const [doctors, setDoctors] = useState([]);
   const [loadingDoctors, setLoadingDoctors] = useState(false);
   const [doctorsError, setDoctorsError] = useState("");
-
-  // حقول الحجز
   const [doctorId, setDoctorId] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
   const [preferredTime, setPreferredTime] = useState("");
@@ -35,10 +31,8 @@ const AppointmentModal = ({ isOpen, toggle, onBooked }) => {
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // الدكتور المختار حاليا (نستخدمه لعرض التخصص)
   const selectedDoctor = doctors.find((d) => d._id === doctorId);
 
-  // جلب الدكاترة من السيرفر
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
@@ -56,7 +50,6 @@ const AppointmentModal = ({ isOpen, toggle, onBooked }) => {
 
     if (isOpen) {
       fetchDoctors();
-      // كل ما تفتح المودال نفضّي الحقول
       setDoctorId("");
       setPreferredDate("");
       setPreferredTime("");
@@ -82,7 +75,6 @@ const AppointmentModal = ({ isOpen, toggle, onBooked }) => {
       return;
     }
 
-    // هنا أهم تعديل: نرسل doctorId مع اسم الدكتور
     const payload = {
       patientId: user?._id,
       patientName: user?.name,
@@ -92,7 +84,7 @@ const AppointmentModal = ({ isOpen, toggle, onBooked }) => {
       patientDateOfBirth: user?.dateOfBirth,
       specialty: doc.specialty || "",
       doctor: doc.name,
-      doctorId: doc._id, // ✅ هذا الذي يحتاجه صفحة الدكتور
+      doctorId: doc._id,
       preferredDate,
       preferredTime,
       reason,
@@ -105,7 +97,6 @@ const AppointmentModal = ({ isOpen, toggle, onBooked }) => {
       const res = await axios.post(`${ENV.SERVER_URL}/appointments`, payload);
 
       if (onBooked) {
-        // لو حاب تحدث الهستوري في الصفحة الأم
         onBooked(res.data.appointment || res.data);
       }
 
@@ -176,7 +167,6 @@ const AppointmentModal = ({ isOpen, toggle, onBooked }) => {
           {errorMsg && <p className="text-danger small mb-2">{errorMsg}</p>}
 
           <Row>
-            {/* اختيار الدكتور من الداتا بيس */}
             <Col md={6}>
               <FormGroup>
                 <Label>Select Doctor</Label>
@@ -197,7 +187,6 @@ const AppointmentModal = ({ isOpen, toggle, onBooked }) => {
               </FormGroup>
             </Col>
 
-            {/* التخصص يظهر تلقائيا من معلومات الدكتور */}
             <Col md={6}>
               <FormGroup>
                 <Label>Medical Specialty</Label>

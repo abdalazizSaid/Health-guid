@@ -10,7 +10,7 @@ const initialState = {
   errorMessage: "",
 };
 
-// تسجيل المريض بكل بياناته (step1 + step2)
+// register(step1 + step2)
 export const registerUser = createAsyncThunk(
   "users/registerUser",
   async (userData, { rejectWithValue }) => {
@@ -73,7 +73,7 @@ export const logout = createAsyncThunk("users/logout", async () => {
   } catch (error) {}
 });
 
-// تحديث البروفايل من صفحة PatientProfile
+// update PatientProfile
 export const updateProfile = createAsyncThunk(
   "users/updateProfile",
   async ({ id, updates }, { rejectWithValue }) => {

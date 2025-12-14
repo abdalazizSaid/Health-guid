@@ -1,4 +1,3 @@
-// src/pages/Register.js
 import {
   Button,
   Col,
@@ -20,7 +19,6 @@ import { registerStep1Schema } from "../Validations/UserValidations";
 const Register = () => {
   const navigate = useNavigate();
 
-  // نفس ستايل الكود القديم useState لكل حقل
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -29,7 +27,6 @@ const Register = () => {
   const [emailError, setEmailError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // react-hook-form + yupResolver مثل الكود القديم
   const {
     register,
     handleSubmit,
@@ -38,7 +35,6 @@ const Register = () => {
     resolver: yupResolver(registerStep1Schema),
   });
 
-  // نفس فكرة onSubmit القديمة لكن هنا يشيك الايميل ثم يوديك للصفحة الثانية
   const onSubmit = async (data) => {
     setServerError("");
     setEmailError("");
@@ -62,7 +58,6 @@ const Register = () => {
         password: data.password,
       };
 
-      // ننقل بيانات الخطوة الاولى للصفحة الثانية
       navigate("/register/details", { state: { step1Data } });
     } catch (err) {
       setServerError("Server error while checking email.");

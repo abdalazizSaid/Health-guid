@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const AppointmentSchema = new mongoose.Schema({
-  // المريض مرتبط بجدول المستخدمين userinfos
+  // userinfos
   patient: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "userinfos",
@@ -14,16 +14,13 @@ const AppointmentSchema = new mongoose.Schema({
   patientGender: String,
   patientDateOfBirth: Date,
 
-  // التخصص القادم من ملف الدكاترة
   specialty: {
     type: String,
     required: true,
   },
 
-  // اسم الدكتور
   doctor: String,
 
-  // لو حاب تربطه بالدكتور في نفس جدول المستخدمين
   doctorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "userinfos",
@@ -53,7 +50,7 @@ const AppointmentSchema = new mongoose.Schema({
 
   status: {
     type: String,
-    default: "pending", // pending او accepted او rejected او completed
+    default: "pending", // pending / accepted / rejected / completed
   },
 
   doctorNote: String,

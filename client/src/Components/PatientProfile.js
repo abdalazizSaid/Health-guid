@@ -1,4 +1,3 @@
-// src/pages/PatientProfile.js
 import { useEffect, useState, useMemo } from "react";
 import {
   Container,
@@ -19,7 +18,6 @@ import { updateProfile } from "../Features/UserSlice";
 import { getAppointmentsByUser } from "../Features/AppointmentSlice";
 import Location from "../Components/Location";
 
-// لون البادج حسب حالة الموعد
 const getStatusColor = (status) => {
   if (!status) return "secondary";
   switch (status.toLowerCase()) {
@@ -63,7 +61,6 @@ const PatientProfile = () => {
     }
   }, [user, dispatch]);
 
-  // حساب اقرب موعد وكل المواعيد القادمة مرتبة
   const { nextAppointment, upcomingAppointments } = useMemo(() => {
     if (!appointments || appointments.length === 0) {
       return { nextAppointment: null, upcomingAppointments: [] };
@@ -155,7 +152,6 @@ const PatientProfile = () => {
   return (
     <div className="patient-page">
       <Container>
-        {/* عنوان الصفحة */}
         <Row className="mb-4">
           <Col>
             <h2 className="patient-title">Patient Profile</h2>
@@ -166,9 +162,7 @@ const PatientProfile = () => {
           </Col>
         </Row>
 
-        {/* الكروت الثلاثة فوق فقط */}
         <Row className="gy-4 mb-4">
-          {/* معلومات المريض */}
           <Col lg={4}>
             <Card className="patient-card">
               <CardBody>
@@ -185,7 +179,6 @@ const PatientProfile = () => {
                 )}
 
                 <Form>
-                  {/* الاسم والايميل فقط عرض */}
                   <FormGroup className="mb-2">
                     <Label className="label small">Full Name</Label>
                     <input
@@ -204,7 +197,6 @@ const PatientProfile = () => {
                     />
                   </FormGroup>
 
-                  {/* باقي الحقول قابلة للتعديل */}
                   <FormGroup className="mb-2">
                     <Label className="label small">Phone Number</Label>
                     <input
@@ -436,7 +428,6 @@ const PatientProfile = () => {
             </Card>
           </Col>
 
-          {/* كرت الموعد القادم وكل المواعيد القادمة تحته */}
           <Col lg={4}>
             <Card className="patient-card next-appointment-card">
               <CardBody>
@@ -541,7 +532,6 @@ const PatientProfile = () => {
             </Card>
           </Col>
 
-          {/* كرت اللوكيشن */}
           <Col lg={4}>
             <Card className="patient-card location-card">
               <CardBody>

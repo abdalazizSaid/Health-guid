@@ -1,4 +1,3 @@
-// src/pages/DoctorProfile.js
 import { useEffect, useState, useMemo } from "react";
 import {
   Container,
